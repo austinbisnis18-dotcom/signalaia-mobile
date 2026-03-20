@@ -9,6 +9,7 @@ import BottomSheet from "./BottomSheet";
 
 const ICON = { size: 20, color: COLORS.white, strokeWidth: 2.4 };
 const HEADER_HEIGHT = 86;
+const HEADER_UNDERLAP = 28;
 
 function IconMail() {
   return (
@@ -486,7 +487,7 @@ export default function SettingsSheet({
       >
         <View style={styles.sheetBody}>
           <View style={styles.stickyHeader} pointerEvents="box-none">
-            <BlurView intensity={52} tint="dark" style={styles.stickyHeaderBlur}>
+            <BlurView intensity={58} tint="dark" style={styles.stickyHeaderBlur}>
               <View style={styles.stickyHeaderOverlay}>
                 <View style={styles.stickyHeaderRow}>
                   {subVisible ? (
@@ -516,18 +517,22 @@ export default function SettingsSheet({
                     </View>
                   </TouchableOpacity>
                 </View>
+                <View style={styles.stickyHeaderFade} />
               </View>
             </BlurView>
           </View>
 
           {subVisible ? (
-            <SubscriptionContent currentPlan={userPlan} topInset={HEADER_HEIGHT + 8} />
+            <SubscriptionContent
+              currentPlan={userPlan}
+              topInset={HEADER_HEIGHT - HEADER_UNDERLAP}
+            />
           ) : (
             <ScrollView
               style={styles.settingsScroll}
               contentContainerStyle={[
                 styles.scrollContent,
-                { paddingTop: HEADER_HEIGHT + 8 },
+                { paddingTop: HEADER_HEIGHT - HEADER_UNDERLAP },
               ]}
               showsVerticalScrollIndicator={false}
               scrollEnabled={!editVisible}
@@ -681,11 +686,13 @@ const styles = StyleSheet.create({
   },
   stickyHeaderBlur: {
     overflow: "hidden",
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
   },
   stickyHeaderOverlay: {
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: "rgba(14,14,14,0.3)",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: COLORS.borderSoft,
+    borderBottomColor: "rgba(255,255,255,0.05)",
   },
   stickyHeaderRow: {
     height: HEADER_HEIGHT,
@@ -695,6 +702,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  stickyHeaderFade: {
+    height: 10,
+    backgroundColor: "rgba(10,10,10,0.08)",
   },
   headerActionBtn: {
     width: 36,
@@ -729,7 +740,9 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 17,
-    backgroundColor: COLORS.headerIconBg,
+    backgroundColor: "rgba(255,255,255,0.06)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.06)",
     alignItems: "center",
     justifyContent: "center",
   },
