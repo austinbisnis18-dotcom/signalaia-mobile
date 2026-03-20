@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import BottomSheet from "./BottomSheet"; // adjust path as needed
+import BottomSheet from "./BottomSheet";
 
 const C = {
   surface: "#252525",
@@ -16,18 +16,24 @@ const C = {
   textSecondary: "#8a8a8a",
   textMuted: "#4a4a4a",
   accent: "#ffffff",
-  green: "#4ade80",
+  neutral: "#d6d6d6",
+  neutralBadge: "#2c2c2c",
+  neutralBadgeAlt: "#2f2f2f",
 };
 
-const PlanSelectionScreen = () => {
+const FeatureItem = ({ text }: { text: string }) => (
+  <View style={styles.featureRow}>
+    <Text style={styles.featureCheck}>+</Text>
+    <Text style={styles.featureText}>{text}</Text>
+  </View>
+);
+
+export default function PlanSelectionScreen() {
   const [sheetVisible, setSheetVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        onPress={() => setSheetVisible(true)}
-        style={styles.openButton}
-      >
+      <TouchableOpacity onPress={() => setSheetVisible(true)} style={styles.openButton}>
         <Text style={styles.openButtonText}>Pilih Plan</Text>
       </TouchableOpacity>
 
@@ -35,14 +41,13 @@ const PlanSelectionScreen = () => {
         visible={sheetVisible}
         onClose={() => setSheetVisible(false)}
         title="Pilih Plan"
-        mode="full"
+        heightFraction={0.93}
       >
         <ScrollView
           style={styles.sheetContent}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: 16 }}
+          contentContainerStyle={styles.sheetContainer}
         >
-          {/* Card PRO */}
           <View style={styles.card}>
             <View style={styles.cardHeader}>
               <View style={styles.nameRow}>
@@ -51,7 +56,7 @@ const PlanSelectionScreen = () => {
                   <Text style={styles.popularText}>Populer</Text>
                 </View>
               </View>
-              <Text style={styles.cardSubtitle}>Taktik & Kejelasan</Text>
+              <Text style={styles.cardSubtitle}>Taktik dan Kejelasan</Text>
             </View>
             <View style={styles.priceContainer}>
               <Text style={styles.price}>Rp49.000</Text>
@@ -61,7 +66,7 @@ const PlanSelectionScreen = () => {
                 <Text style={styles.saveBadgeText}>Save 50%</Text>
               </View>
             </View>
-            <Text style={styles.includesFrom}>Semua di LITE, plus ↓</Text>
+            <Text style={styles.includesFrom}>Semua di LITE, plus</Text>
             <View style={styles.features}>
               <FeatureItem text="500 Kredit / Bulan" />
               <FeatureItem text="Upload Screenshot" />
@@ -72,7 +77,6 @@ const PlanSelectionScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Card MAX */}
           <View style={styles.card}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>MAX</Text>
@@ -86,13 +90,13 @@ const PlanSelectionScreen = () => {
                 <Text style={styles.saveBadgeText}>Save 50%</Text>
               </View>
             </View>
-            <Text style={styles.includesFrom}>Semua di PRO, plus ↓</Text>
+            <Text style={styles.includesFrom}>Semua di PRO, plus</Text>
             <View style={styles.features}>
               <FeatureItem text="2.500 Kredit / Bulan" />
               <FeatureItem text="Prioritas AI (Model Terbaik)" />
-              <FeatureItem text='Mode "Roast Me" — Coach tampar lo kalau needy' />
-              <FeatureItem text="Analisis Manipulasi & Red Flag 100% Terbuka" />
-              <FeatureItem text="Game Plan 3–7 Hari (rencana taktis harian)" />
+              <FeatureItem text={'Mode "Roast Me" - Coach tampar lo kalau needy'} />
+              <FeatureItem text="Analisis Manipulasi dan Red Flag 100% Terbuka" />
+              <FeatureItem text="Game Plan 3-7 Hari (rencana taktis harian)" />
             </View>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Ganti ke MAX</Text>
@@ -102,35 +106,32 @@ const PlanSelectionScreen = () => {
       </BottomSheet>
     </SafeAreaView>
   );
-};
-
-const FeatureItem = ({ text }: { text: string }) => (
-  <View style={styles.featureRow}>
-    <Text style={styles.featureCheck}>✓</Text>
-    <Text style={styles.featureText}>{text}</Text>
-  </View>
-);
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#000",
+    backgroundColor: "#000000",
   },
   openButton: {
-    backgroundColor: "#333",
+    backgroundColor: "#333333",
     paddingHorizontal: 24,
     paddingVertical: 14,
     borderRadius: 12,
   },
   openButtonText: {
-    color: "white",
+    color: C.accent,
     fontSize: 16,
     fontWeight: "600",
   },
   sheetContent: {
     flex: 1,
+  },
+  sheetContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 40,
   },
   card: {
     backgroundColor: C.surface,
@@ -155,13 +156,13 @@ const styles = StyleSheet.create({
     color: C.textPrimary,
   },
   popularBadge: {
-    backgroundColor: "#1a3a1a",
+    backgroundColor: C.neutralBadge,
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 6,
   },
   popularText: {
-    color: C.green,
+    color: C.neutral,
     fontSize: 10,
     fontWeight: "700",
   },
@@ -190,13 +191,13 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
   },
   saveBadge: {
-    backgroundColor: "#1a2a1a",
+    backgroundColor: C.neutralBadgeAlt,
     paddingHorizontal: 7,
     paddingVertical: 2,
     borderRadius: 6,
   },
   saveBadgeText: {
-    color: C.green,
+    color: C.neutral,
     fontSize: 10,
     fontWeight: "700",
   },
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   featureCheck: {
-    color: C.green,
+    color: C.neutral,
     fontSize: 12,
     lineHeight: 18,
   },
@@ -234,10 +235,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#000",
+    color: "#000000",
     fontSize: 14,
     fontWeight: "700",
   },
 });
-
-export default PlanSelectionScreen;
